@@ -21,28 +21,30 @@ PREMIUM_STARS = 50
 
 TEXTS = {
     "ua": {
-        "welcome": "Pryvit! Ya ShI-pomichnyk. Napyshy bud-yake zapytannya!",
-        "cleared": "Istoriyu ochyshcheno!",
-        "thinking": "Dumayu...",
-        "limit": "Limit vycherpano! Kupy premium dlya bezlimitu na 30 dniv.",
-        "stats": "Zapytiv sohodni: {req}/15\nStatus: {status}",
-        "premium_info": "Premium - 50 Stars\nBezlimit na 30 dniv!",
-        "premium_ok": "Premium aktyvovano na 30 dniv!",
-        "free": "Bezkoshtovnyy",
-        "prem": "Premium",
-        "buy": "Kupyty premium",
+        "welcome": "Привіт! Я ШІ-помічник на базі Groq. Напиши будь-яке запитання!\n\nКоманди:\n/help - підказки\n/stats - статистика\n/premium - преміум\n/clear - очистити історію",
+        "cleared": "Історію очищено!",
+        "thinking": "Думаю...",
+        "limit": "Ліміт вичерпано!\n\nВикористано всі 15 безкоштовних запитів на сьогодні.\nКупи преміум за 50 Stars і отримай безліміт на 30 днів!",
+        "stats": "Запитів сьогодні: {req}/15\nСтатус: {status}",
+        "premium_info": "Преміум підписка\n\n50 Telegram Stars\nБезліміт запитів на 30 днів!",
+        "premium_ok": "Преміум активовано на 30 днів! Дякуємо за підтримку!",
+        "free": "Безкоштовний",
+        "prem": "Преміум",
+        "buy": "Купити преміум",
+        "help": "Що я вмію:\n\n- Відповідати на запитання\n- Пояснювати складні теми\n- Допомагати з текстами та ідеями\n- Перекладати та редагувати\n- Писати код\n\n/stats - статистика\n/premium - преміум\n/clear - очистити історію",
     },
     "ru": {
-        "welcome": "Privet! Ya II-pomoshnik. Napishi lyuboy vopros!",
-        "cleared": "Istoriya ochishchena!",
-        "thinking": "Dumayu...",
-        "limit": "Limit ischerpan! Kupi premium dlya bezlimita na 30 dney.",
-        "stats": "Zaprosov segodnya: {req}/15\nStatus: {status}",
-        "premium_info": "Premium - 50 Stars\nBezlimit na 30 dney!",
-        "premium_ok": "Premium aktivirovan na 30 dney!",
-        "free": "Besplatnyy",
-        "prem": "Premium",
-        "buy": "Kupit premium",
+        "welcome": "Привет! Я ИИ-помощник на базе Groq. Напиши любой вопрос!\n\nКоманды:\n/help - подсказки\n/stats - статистика\n/premium - премиум\n/clear - очистить историю",
+        "cleared": "История очищена!",
+        "thinking": "Думаю...",
+        "limit": "Лимит исчерпан!\n\nИспользованы все 15 бесплатных запросов на сегодня.\nКупи премиум за 50 Stars и получи безлимит на 30 дней!",
+        "stats": "Запросов сегодня: {req}/15\nСтатус: {status}",
+        "premium_info": "Премиум подписка\n\n50 Telegram Stars\nБезлимит запросов на 30 дней!",
+        "premium_ok": "Премиум активирован на 30 дней! Спасибо за поддержку!",
+        "free": "Бесплатный",
+        "prem": "Премиум",
+        "buy": "Купить премиум",
+        "help": "Что я умею:\n\n- Отвечать на вопросы\n- Объяснять сложные темы\n- Помогать с текстами и идеями\n- Переводить и редактировать\n- Писать код\n\n/stats - статистика\n/premium - премиум\n/clear - очистить историю",
     },
 }
 
@@ -64,8 +66,8 @@ def is_premium(u):
 
 def lang_kb():
     return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="UA Ukrainska", callback_data="lang_ua"),
-        InlineKeyboardButton(text="RU Russkiy", callback_data="lang_ru"),
+        InlineKeyboardButton(text="UA Українська", callback_data="lang_ua"),
+        InlineKeyboardButton(text="RU Русский", callback_data="lang_ru"),
     ]])
 
 
@@ -86,6 +88,13 @@ async def set_lang(callback: CallbackQuery):
     lang = callback.data.split("_")[1]
     get_user(callback.from_user.id)["lang"] = lang
     await callback.message.edit_text(TEXTS[lang]["welcome"])
+
+
+@dp.message(Command("help"))
+async def cmd_help(message: Message):
+    u = get_user(message.from_user.id)
+    lang = u["lang"] or "ua"
+    await message.answer(TEXTS[lang]["help"])
 
 
 @dp.message(Command("clear"))
@@ -154,7 +163,7 @@ async def handle_message(message: Message):
         response = await asyncio.to_thread(
             client.chat.completions.create,
             model="llama-3.3-70b-versatile",
-            messages=[{"role": "system", "content": "Ty korysnyy pomichnyk. Vidpovidai na movi korystuvacha."}] + u["history"][-20:],
+            messages=[{"role": "system", "content": "Ти корисний помічник. Відповідай на мові користувача."}] + u["history"][-20:],
         )
         reply = response.choices[0].message.content
         u["history"].append({"role": "assistant", "content": reply})
