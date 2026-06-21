@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import os
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 from groq import Groq
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
@@ -16,7 +16,7 @@ dp = Dispatcher()
 client = Groq(api_key=GROQ_API_KEY)
 
 users = {}
-FREE_LIMIT = 15
+HOURLY_LIMIT = 10
 PREMIUM_STARS = 50
 
 TEXTS = {
@@ -24,8 +24,8 @@ TEXTS = {
         "welcome": "👋 *Привіт!*\n\nЯ — твій особистий ШІ-помічник 🤖\nГотовий відповісти на будь-яке запитання!\n\n━━━━━━━━━━━━━━\n📌 *Команди:*\n❓ /help — підказки\n📊 /stats — статистика\n💎 /premium — преміум\n🗑 /clear — очистити історію\n━━━━━━━━━━━━━━",
         "cleared": "🗑 Історію очищено! Починаємо з чистого аркуша ✨",
         "thinking": "⏳ Думаю...",
-        "limit": "🚫 *Ліміт вичерпано!*\n\nТи використав усі 15 безкоштовних запитів на сьогодні 😔\n\n💎 Купи преміум за *50 Stars* і отримай *безліміт на 30 днів!* 🚀",
-        "stats": "📊 *Твоя статистика*\n━━━━━━━━━━━━━━\n📝 Запитів сьогодні: *{req}/15*\n🏷 Статус: *{status}*\n━━━━━━━━━━━━━━",
+        "limit": "🚫 *Ліміт вичерпано!*\n\nТи використав усі 10 запитів цієї години 😔\nСпробуй знову через {minutes} хв ⏱\n\n💎 Або купи преміум за *50 Stars* і отримай *безліміт на 30 днів!* 🚀",
+        "stats": "📊 *Твоя статистика*\n━━━━━━━━━━━━━━\n📝 Запитів за годину: *{req}/10*\n🏷 Статус: *{status}*\n━━━━━━━━━━━━━━",
         "premium_info": "💎 *Преміум підписка*\n━━━━━━━━━━━━━━\n⭐ Ціна: *50 Telegram Stars*\n♾ Безліміт запитів на *30 днів*\n⚡ Без обмежень і черг\n━━━━━━━━━━━━━━",
         "premium_ok": "🎉 *Вітаємо!*\n\nПреміум активовано на 30 днів!\nДякуємо за підтримку 💜",
         "free": "🆓 Безкоштовний",
@@ -37,8 +37,8 @@ TEXTS = {
         "welcome": "👋 *Привет!*\n\nЯ — твой личный ИИ-помощник 🤖\nГотов ответить на любой вопрос!\n\n━━━━━━━━━━━━━━\n📌 *Команды:*\n❓ /help — подсказки\n📊 /stats — статистика\n💎 /premium — премиум\n🗑 /clear — очистить историю\n━━━━━━━━━━━━━━",
         "cleared": "🗑 История очищена! Начинаем с чистого листа ✨",
         "thinking": "⏳ Думаю...",
-        "limit": "🚫 *Лимит исчерпан!*\n\nТы использовал все 15 бесплатных запросов на сегодня 😔\n\n💎 Купи премиум за *50 Stars* и получи *безлимит на 30 дней!* 🚀",
-        "stats": "📊 *Твоя статистика*\n━━━━━━━━━━━━━━\n📝 Запросов сегодня: *{req}/15*\n🏷 Статус: *{status}*\n━━━━━━━━━━━━━━",
+        "limit": "🚫 *Лимит исчерпан!*\n\nТы использовал все 10 запросов этого часа 😔\nПопробуй снова через {minutes} мин ⏱\n\n💎 Или купи премиум за *50 Stars* и получи *безлимит на 30 дней!* 🚀",
+        "stats": "📊 *Твоя статистика*\n━━━━━━━━━━━━━━\n📝 Запросов за час: *{req}/10*\n🏷 Статус: *{status}*\n━━━━━━━━━━━━━━",
         "premium_info": "💎 *Премиум подписка*\n━━━━━━━━━━━━━━\n⭐ Цена: *50 Telegram Stars*\n♾ Безлимит запросов на *30 дней*\n⚡ Без ограничений и очередей\n━━━━━━━━━━━━━━",
         "premium_ok": "🎉 *Поздравляем!*\n\nПремиум активирован на 30 дней!\nСпасибо за поддержку 💜",
         "free": "🆓 Бесплатный",
@@ -51,17 +51,24 @@ TEXTS = {
 
 def get_user(uid):
     if uid not in users:
-        users[uid] = {"lang": None, "req": 0, "last_date": None, "premium_until": None, "history": []}
+        users[uid] = {"lang": None, "req": 0, "window_start": None, "premium_until": None, "history": []}
     u = users[uid]
-    today = date.today()
-    if u["last_date"] != today:
+    now = datetime.now()
+    if u["window_start"] is None or now - u["window_start"] >= timedelta(hours=1):
         u["req"] = 0
-        u["last_date"] = today
+        u["window_start"] = now
     return u
 
 
+def minutes_left(u):
+    now = datetime.now()
+    elapsed = now - u["window_start"]
+    remaining = timedelta(hours=1) - elapsed
+    return max(1, int(remaining.total_seconds() // 60))
+
+
 def is_premium(u):
-    return bool(u["premium_until"] and u["premium_until"] >= date.today())
+    return bool(u["premium_until"] and u["premium_until"] >= datetime.now().date())
 
 
 def lang_kb():
@@ -141,7 +148,7 @@ async def pre_checkout(query: PreCheckoutQuery):
 async def payment_done(message: Message):
     u = get_user(message.from_user.id)
     lang = u["lang"] or "ua"
-    u["premium_until"] = date.today() + timedelta(days=30)
+    u["premium_until"] = (datetime.now() + timedelta(days=30)).date()
     await message.answer(TEXTS[lang]["premium_ok"], parse_mode="Markdown")
 
 
@@ -154,8 +161,9 @@ async def handle_message(message: Message):
         await message.answer("🌍 Обери мову / Выбери язык:", reply_markup=lang_kb())
         return
     lang = u["lang"]
-    if not is_premium(u) and u["req"] >= FREE_LIMIT:
-        await message.answer(TEXTS[lang]["limit"], parse_mode="Markdown", reply_markup=prem_kb(lang))
+    if not is_premium(u) and u["req"] >= HOURLY_LIMIT:
+        text = TEXTS[lang]["limit"].format(minutes=minutes_left(u))
+        await message.answer(text, parse_mode="Markdown", reply_markup=prem_kb(lang))
         return
     u["history"].append({"role": "user", "content": message.text})
     thinking = await message.answer(TEXTS[lang]["thinking"])
