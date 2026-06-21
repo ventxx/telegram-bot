@@ -80,7 +80,8 @@ def prem_kb(lang):
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     get_user(message.from_user.id)["history"].clear()
-    await message.answer("Choose language / Obery movu:", reply_markup=lang_kb())
+    # Замінено латинку на чисту українську (та залишено російську, бо вона є в меню вибору)
+    await message.answer("Оберіть мову / Выберите язык:", reply_markup=lang_kb())
 
 
 @dp.callback_query(F.data.startswith("lang_"))
@@ -151,7 +152,8 @@ async def handle_message(message: Message):
         return
     u = get_user(message.from_user.id)
     if not u["lang"]:
-        await message.answer("Choose language / Obery movu:", reply_markup=lang_kb())
+        # Тут також виправлено на кирилицю
+        await message.answer("Оберіть мову / Выберите язык:", reply_markup=lang_kb())
         return
     lang = u["lang"]
     if not is_premium(u) and u["req"] >= FREE_LIMIT:
