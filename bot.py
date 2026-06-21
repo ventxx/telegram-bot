@@ -21,30 +21,30 @@ PREMIUM_STARS = 50
 
 TEXTS = {
     "ua": {
-        "welcome": "Привіт! Я ШІ-помічник на базі Groq. Напиши будь-яке запитання!\n\nКоманди:\n/help - підказки\n/stats - статистика\n/premium - преміум\n/clear - очистити історію",
-        "cleared": "Історію очищено!",
-        "thinking": "Думаю...",
-        "limit": "Ліміт вичерпано!\n\nВикористано всі 15 безкоштовних запитів на сьогодні.\nКупи преміум за 50 Stars і отримай безліміт на 30 днів!",
-        "stats": "Запитів сьогодні: {req}/15\nСтатус: {status}",
-        "premium_info": "Преміум підписка\n\n50 Telegram Stars\nБезліміт запитів на 30 днів!",
-        "premium_ok": "Преміум активовано на 30 днів! Дякуємо за підтримку!",
-        "free": "Безкоштовний",
-        "prem": "Преміум",
-        "buy": "Купити преміум",
-        "help": "Що я вмію:\n\n- Відповідати на запитання\n- Пояснювати складні теми\n- Допомагати з текстами та ідеями\n- Перекладати та редагувати\n- Писати код\n\n/stats - статистика\n/premium - преміум\n/clear - очистити історію",
+        "welcome": "👋 *Привіт!*\n\nЯ — твій особистий ШІ-помічник 🤖\nГотовий відповісти на будь-яке запитання!\n\n━━━━━━━━━━━━━━\n📌 *Команди:*\n❓ /help — підказки\n📊 /stats — статистика\n💎 /premium — преміум\n🗑 /clear — очистити історію\n━━━━━━━━━━━━━━",
+        "cleared": "🗑 Історію очищено! Починаємо з чистого аркуша ✨",
+        "thinking": "⏳ Думаю...",
+        "limit": "🚫 *Ліміт вичерпано!*\n\nТи використав усі 15 безкоштовних запитів на сьогодні 😔\n\n💎 Купи преміум за *50 Stars* і отримай *безліміт на 30 днів!* 🚀",
+        "stats": "📊 *Твоя статистика*\n━━━━━━━━━━━━━━\n📝 Запитів сьогодні: *{req}/15*\n🏷 Статус: *{status}*\n━━━━━━━━━━━━━━",
+        "premium_info": "💎 *Преміум підписка*\n━━━━━━━━━━━━━━\n⭐ Ціна: *50 Telegram Stars*\n♾ Безліміт запитів на *30 днів*\n⚡ Без обмежень і черг\n━━━━━━━━━━━━━━",
+        "premium_ok": "🎉 *Вітаємо!*\n\nПреміум активовано на 30 днів!\nДякуємо за підтримку 💜",
+        "free": "🆓 Безкоштовний",
+        "prem": "💎 Преміум",
+        "buy": "💎 Купити преміум",
+        "help": "🤖 *Що я вмію:*\n━━━━━━━━━━━━━━\n💬 Відповідати на запитання\n📚 Пояснювати складні теми\n✍️ Допомагати з текстами та ідеями\n🌍 Перекладати та редагувати\n💻 Писати код\n━━━━━━━━━━━━━━\n📊 /stats — статистика\n💎 /premium — преміум\n🗑 /clear — очистити історію",
     },
     "ru": {
-        "welcome": "Привет! Я ИИ-помощник на базе Groq. Напиши любой вопрос!\n\nКоманды:\n/help - подсказки\n/stats - статистика\n/premium - премиум\n/clear - очистить историю",
-        "cleared": "История очищена!",
-        "thinking": "Думаю...",
-        "limit": "Лимит исчерпан!\n\nИспользованы все 15 бесплатных запросов на сегодня.\nКупи премиум за 50 Stars и получи безлимит на 30 дней!",
-        "stats": "Запросов сегодня: {req}/15\nСтатус: {status}",
-        "premium_info": "Премиум подписка\n\n50 Telegram Stars\nБезлимит запросов на 30 дней!",
-        "premium_ok": "Премиум активирован на 30 дней! Спасибо за поддержку!",
-        "free": "Бесплатный",
-        "prem": "Премиум",
-        "buy": "Купить премиум",
-        "help": "Что я умею:\n\n- Отвечать на вопросы\n- Объяснять сложные темы\n- Помогать с текстами и идеями\n- Переводить и редактировать\n- Писать код\n\n/stats - статистика\n/premium - премиум\n/clear - очистить историю",
+        "welcome": "👋 *Привет!*\n\nЯ — твой личный ИИ-помощник 🤖\nГотов ответить на любой вопрос!\n\n━━━━━━━━━━━━━━\n📌 *Команды:*\n❓ /help — подсказки\n📊 /stats — статистика\n💎 /premium — премиум\n🗑 /clear — очистить историю\n━━━━━━━━━━━━━━",
+        "cleared": "🗑 История очищена! Начинаем с чистого листа ✨",
+        "thinking": "⏳ Думаю...",
+        "limit": "🚫 *Лимит исчерпан!*\n\nТы использовал все 15 бесплатных запросов на сегодня 😔\n\n💎 Купи премиум за *50 Stars* и получи *безлимит на 30 дней!* 🚀",
+        "stats": "📊 *Твоя статистика*\n━━━━━━━━━━━━━━\n📝 Запросов сегодня: *{req}/15*\n🏷 Статус: *{status}*\n━━━━━━━━━━━━━━",
+        "premium_info": "💎 *Премиум подписка*\n━━━━━━━━━━━━━━\n⭐ Цена: *50 Telegram Stars*\n♾ Безлимит запросов на *30 дней*\n⚡ Без ограничений и очередей\n━━━━━━━━━━━━━━",
+        "premium_ok": "🎉 *Поздравляем!*\n\nПремиум активирован на 30 дней!\nСпасибо за поддержку 💜",
+        "free": "🆓 Бесплатный",
+        "prem": "💎 Премиум",
+        "buy": "💎 Купить премиум",
+        "help": "🤖 *Что я умею:*\n━━━━━━━━━━━━━━\n💬 Отвечать на вопросы\n📚 Объяснять сложные темы\n✍️ Помогать с текстами и идеями\n🌍 Переводить и редактировать\n💻 Писать код\n━━━━━━━━━━━━━━\n📊 /stats — статистика\n💎 /premium — премиум\n🗑 /clear — очистить историю",
     },
 }
 
@@ -66,8 +66,8 @@ def is_premium(u):
 
 def lang_kb():
     return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="UA Українська", callback_data="lang_ua"),
-        InlineKeyboardButton(text="RU Русский", callback_data="lang_ru"),
+        InlineKeyboardButton(text="🇺🇦 Українська", callback_data="lang_ua"),
+        InlineKeyboardButton(text="🇷🇺 Русский", callback_data="lang_ru"),
     ]])
 
 
@@ -80,21 +80,21 @@ def prem_kb(lang):
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     get_user(message.from_user.id)["history"].clear()
-    await message.answer("Choose language / Obery movu:", reply_markup=lang_kb())
+    await message.answer("🌍 Обери мову / Выбери язык:", reply_markup=lang_kb())
 
 
 @dp.callback_query(F.data.startswith("lang_"))
 async def set_lang(callback: CallbackQuery):
     lang = callback.data.split("_")[1]
     get_user(callback.from_user.id)["lang"] = lang
-    await callback.message.edit_text(TEXTS[lang]["welcome"])
+    await callback.message.edit_text(TEXTS[lang]["welcome"], parse_mode="Markdown")
 
 
 @dp.message(Command("help"))
 async def cmd_help(message: Message):
     u = get_user(message.from_user.id)
     lang = u["lang"] or "ua"
-    await message.answer(TEXTS[lang]["help"])
+    await message.answer(TEXTS[lang]["help"], parse_mode="Markdown")
 
 
 @dp.message(Command("clear"))
@@ -110,21 +110,21 @@ async def cmd_stats(message: Message):
     u = get_user(message.from_user.id)
     lang = u["lang"] or "ua"
     status = TEXTS[lang]["prem"] if is_premium(u) else TEXTS[lang]["free"]
-    await message.answer(TEXTS[lang]["stats"].format(req=u["req"], status=status))
+    await message.answer(TEXTS[lang]["stats"].format(req=u["req"], status=status), parse_mode="Markdown")
 
 
 @dp.message(Command("premium"))
 async def cmd_premium(message: Message):
     u = get_user(message.from_user.id)
     lang = u["lang"] or "ua"
-    await message.answer(TEXTS[lang]["premium_info"], reply_markup=prem_kb(lang))
+    await message.answer(TEXTS[lang]["premium_info"], parse_mode="Markdown", reply_markup=prem_kb(lang))
 
 
 @dp.callback_query(F.data == "buy_premium")
 async def buy_premium(callback: CallbackQuery):
     await bot.send_invoice(
         chat_id=callback.from_user.id,
-        title="Premium",
+        title="💎 Premium",
         description="30 days unlimited access",
         payload="premium_30days",
         currency="XTR",
@@ -142,7 +142,7 @@ async def payment_done(message: Message):
     u = get_user(message.from_user.id)
     lang = u["lang"] or "ua"
     u["premium_until"] = date.today() + timedelta(days=30)
-    await message.answer(TEXTS[lang]["premium_ok"])
+    await message.answer(TEXTS[lang]["premium_ok"], parse_mode="Markdown")
 
 
 @dp.message()
@@ -151,11 +151,11 @@ async def handle_message(message: Message):
         return
     u = get_user(message.from_user.id)
     if not u["lang"]:
-        await message.answer("Choose language / Obery movu:", reply_markup=lang_kb())
+        await message.answer("🌍 Обери мову / Выбери язык:", reply_markup=lang_kb())
         return
     lang = u["lang"]
     if not is_premium(u) and u["req"] >= FREE_LIMIT:
-        await message.answer(TEXTS[lang]["limit"], reply_markup=prem_kb(lang))
+        await message.answer(TEXTS[lang]["limit"], parse_mode="Markdown", reply_markup=prem_kb(lang))
         return
     u["history"].append({"role": "user", "content": message.text})
     thinking = await message.answer(TEXTS[lang]["thinking"])
@@ -182,4 +182,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-        
+    
